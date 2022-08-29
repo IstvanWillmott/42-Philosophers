@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct	s_philo
 {
@@ -25,6 +26,7 @@ typedef struct	s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_eaten;
+	int				myfork;
 	pthread_mutex_t fork;
 }	t_philo;
 

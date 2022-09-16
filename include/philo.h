@@ -38,6 +38,8 @@ typedef struct s_brain
 	int			alive;
 }	t_brain;
 
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
+
+void	philo_exec(t_philo *philos)
 
 #endif

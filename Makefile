@@ -19,7 +19,8 @@ OBJDIR = ./obj
 
 # src
 SRC = 	main.c \
-		helpers.c
+		helpers.c \
+		threads.c 
 
 OBJ = $(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 

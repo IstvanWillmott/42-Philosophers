@@ -27,8 +27,9 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 		if (argc == 6)
 			brain->philos[i].times_eaten = ft_atoi(argv[5]);
 		brain->philos[i].myfork = 1;
-		//pthread_create(&brain->thread_id[i], NULL,
-				//(void *_Nullable), &brain->philos[i]);
+		pthread_create(&brain->thread_id[i], NULL,
+				(void *_Nullable)philo_exec, &brain->philos[i]);
+		pthread_mutex_init(&brain->philos[i].fork, NULL);
 		i++;
 	}
 }

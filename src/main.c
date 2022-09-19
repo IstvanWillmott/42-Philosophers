@@ -18,6 +18,7 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 
 	i = 0;
 	brain->thread_id = malloc(sizeof(pthread_t) * brain->total_philo);
+	brain->current = 0;
 	while (i < brain->total_philo)
 	{
 		brain->philos[i].num = i;

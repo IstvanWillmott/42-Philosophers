@@ -21,6 +21,7 @@
 
 typedef struct	s_philo
 {
+	int 			alive;
 	int				num;
 	int				time_to_die;
 	int				time_to_eat;
@@ -28,6 +29,7 @@ typedef struct	s_philo
 	int				times_eaten;
 	int				myfork;
 	pthread_mutex_t fork;
+	struct t_philo	next_philo;
 }	t_philo;
 
 typedef struct s_brain
@@ -36,10 +38,11 @@ typedef struct s_brain
 	int			total_philo;
 	t_philo		*philos;
 	int			alive;
+	int			current;
 }	t_brain;
 
 int		ft_atoi(const char *str);
 
-void	philo_exec(t_philo *philos)
+void	philo_exec(t_philo *philos);
 
 #endif

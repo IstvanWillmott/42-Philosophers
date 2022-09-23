@@ -10,6 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "philo.h"
+
+long	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_usec/1000);
+}
+
 int	ft_atoi(const char	*str)
 {
 	int	ret;

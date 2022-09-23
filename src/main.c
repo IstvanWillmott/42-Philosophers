@@ -21,13 +21,20 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 	brain->current = 0;
 	while (i < brain->total_philo)
 	{
+		brain->philos[i].alive = 1;
 		brain->philos[i].num = i;
 		brain->philos[i].time_to_die = ft_atoi(argv[2]);
 		brain->philos[i].time_to_eat = ft_atoi(argv[3]);
 		brain->philos[i].time_to_sleep = ft_atoi(argv[4]);
 		if (argc == 6)
 			brain->philos[i].times_eaten = ft_atoi(argv[5]);
+		else
+			brain->philos[i].times_eaten = -1;
 		brain->philos[i].myfork = 1;
+		if (i == brain->total_philo - 1)
+			brain->philos[i].next_philo = &brain->philos[0];
+		else
+			brain->philos[i].next_philo = &brain->philos[i + 1];
 		pthread_create(&brain->thread_id[i], NULL,
 				(void *_Nullable)philo_exec, &brain->philos[i]);
 		pthread_mutex_init(&brain->philos[i].fork, NULL);

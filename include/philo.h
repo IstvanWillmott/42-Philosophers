@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <string.h>
 
 typedef struct	s_philo
 {
@@ -29,7 +30,7 @@ typedef struct	s_philo
 	int				times_eaten;
 	int				myfork;
 	pthread_mutex_t fork;
-	struct t_philo	next_philo;
+	struct s_philo	*next_philo;
 }	t_philo;
 
 typedef struct s_brain
@@ -44,5 +45,7 @@ typedef struct s_brain
 int		ft_atoi(const char *str);
 
 void	philo_exec(t_philo *philos);
+
+long	get_time(void);
 
 #endif

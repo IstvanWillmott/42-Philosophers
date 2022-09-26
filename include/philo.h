@@ -22,6 +22,7 @@
 
 typedef struct	s_philo
 {
+	int				begin_time;
 	int 			alive;
 	int				num;
 	int				time_to_die;
@@ -35,6 +36,7 @@ typedef struct	s_philo
 
 typedef struct s_brain
 {
+	int			begin_time;
 	pthread_t	*thread_id;
 	int			total_philo;
 	t_philo		*philos;
@@ -46,6 +48,6 @@ int		ft_atoi(const char *str);
 
 void	philo_exec(t_philo *philos);
 
-long	get_time(void);
+int		get_time(void);
 
 #endif

@@ -21,6 +21,7 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 	brain->current = 0;
 	while (i < brain->total_philo)
 	{
+		brain->philos[i].begin_time = brain->begin_time;
 		brain->philos[i].alive = 1;
 		brain->philos[i].num = i;
 		brain->philos[i].time_to_die = ft_atoi(argv[2]);
@@ -57,6 +58,7 @@ int	main(int argc, char *argv[])
 	brain.total_philo = ft_atoi(argv[1]);
 	brain.philos = malloc(sizeof(t_philo) * brain.total_philo);
 	brain.alive = 1;
+	brain.begin_time = get_time();
 	philo_setup(&brain, argc, argv);
 	return (0);
 }

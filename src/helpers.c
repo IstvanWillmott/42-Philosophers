@@ -12,12 +12,12 @@
 
 #include "philo.h"
 
-long	get_time(void)
+int	get_time(void)
 {
-	struct timeval	time;
+	struct timeval	t;
 
-	gettimeofday(&time, NULL);
-	return (time.tv_usec/1000);
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
 int	ft_atoi(const char	*str)

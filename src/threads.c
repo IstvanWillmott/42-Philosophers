@@ -23,11 +23,11 @@ void	philo_sleep(t_philo *philos)
 	int	think_time;
 
 	sleep_time = philos->time_to_sleep + get_time();
-	printf("%ims	%i is sleeping\n", get_time(), philos->num + 1);
+	printf("%ims	%i is sleeping\n", get_time() - philos->begin_time, philos->num + 1);
 	while (sleep_time > get_time())
 		;
 	think_time = philos->time_to_sleep + get_time();
-	printf("%ims	%i is thinking\n", get_time(), philos->num + 1);
+	printf("%ims	%i is thinking\n", get_time() - philos->begin_time, philos->num + 1);
 	while (think_time > get_time())
 		;
 }
@@ -38,14 +38,16 @@ void	eat(t_philo *philos)
 	int	eat_time;
 
 	cur_time = get_time();
+	while (philos->myfork == 0)
+		;
 	philos->myfork = 0;
 	philos->next_philo->myfork = 0;
 	pthread_mutex_lock(&philos->fork);
 	pthread_mutex_lock(&philos->next_philo->fork);
-	printf("%ims	%i has taken a fork\n", get_time(), philos->num + 1);
-	printf("%ims	%i has taken a fork\n", get_time(), philos->num + 1);
-	printf("%ims	%i is eating\n", get_time(), philos->num + 1);
-	eat_time = philos->time_to_eat + get_time();
+	printf("%ims	%i has taken a fork\n", get_time() - philos->begin_time, philos->num + 1);
+	printf("%ims	%i has taken a fork\n", get_time() - philos->begin_time, philos->num + 1);
+	printf("%ims	%i is eating\n", get_time() - philos->begin_time, philos->num + 1);
+	eat_time = philos->time_to_eat + get_time() - philos->begin_time;
 	while (eat_time > get_time())
 		;
 	philos->times_eaten--;
@@ -60,9 +62,9 @@ void	philo_exec(t_philo *philos)
 {
 	int	death_timer;
 
-	death_timer = philos->time_to_die + get_time();
 	while (philos->alive == 1 && philos->times_eaten != 0)
 	{
+		death_timer = philos->time_to_die + get_time();
 		if (death_timer < get_time())
 			break ;
 		eat(philos);

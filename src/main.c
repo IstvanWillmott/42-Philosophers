@@ -12,6 +12,29 @@
 
 #include "philo.h"
 
+void	philo_start(t_brain *brain)
+{
+	int	i;
+	long int	wait_time;
+
+	i = 1;
+	wait_time = brain->philos[i].time_to_eat/2;
+	while (i < brain->total_philo)
+	{
+		pthread_create(&brain->thread_id[i], NULL, 
+			(void *_Nullable)philo_exec, &brain->philos[i]);
+		if (i == brain->total_philo - 2)
+		{
+			i = 0;
+			wait_time = wait_time + get_time();
+			while (wait_time > get_time())
+				;
+		}
+		else
+			i += 2;
+	}
+}
+
 void	philo_setup(t_brain *brain, int argc, char **argv)
 {
 	int	i;
@@ -36,11 +59,10 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 			brain->philos[i].next_philo = &brain->philos[0];
 		else
 			brain->philos[i].next_philo = &brain->philos[i + 1];
-		pthread_create(&brain->thread_id[i], NULL,
-				(void *_Nullable)philo_exec, &brain->philos[i]);
 		pthread_mutex_init(&brain->philos[i].fork, NULL);
 		i++;
 	}
+	philo_start(&*brain);
 }
 
 int	main(int argc, char *argv[])

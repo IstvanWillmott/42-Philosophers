@@ -20,27 +20,20 @@
 void	philo_sleep(t_philo *philos)
 {
 	long	sleep_time;
-	long	think_time;
 
 	sleep_time = philos->time_to_sleep + get_time();
 	printf("%lims	%i is sleeping\n", get_time() - philos->begin_time, philos->num + 1);
 	while (sleep_time > get_time())
 		;
-	think_time = philos->time_to_sleep + get_time();
 	printf("%lims	%i is thinking\n", get_time() - philos->begin_time, philos->num + 1);
-	while (think_time > get_time())
+	while (philos->myfork == 0)
 		;
-	printf("end");
 }
 
 void	eat(t_philo *philos)
 {
 	long	eat_time;
 
-	if (philos->myfork == 0)
-		philo_sleep(&*philos);
-	while (philos->myfork == 0)
-		;
 	philos->myfork = 0;
 	philos->next_philo->myfork = 0;
 	pthread_mutex_lock(&philos->fork);
@@ -64,12 +57,15 @@ void	philo_exec(t_philo *philos)
 	long	death_timer;
 
 	death_timer = philos->time_to_die + get_time();
-	while (1)
+	/*while (philos->alive == 1)
 	{
 		if (death_timer < get_time())
 			break ;
 		death_timer = philos->time_to_die + get_time();
 		eat(&*philos);
-	}
-	printf("ded");
+	}*/
+	while (1)
+		eat(&*philos);
+	//philos->alive = 0;
+	printf("%i ded\n", philos->num + 1);
 }

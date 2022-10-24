@@ -14,16 +14,20 @@
 
 void	philo_start(t_brain *brain)
 {
-	int	i;
-	long int	wait_time;
+	int		i;
+	int		odd;
+	long	wait_time;
 
 	i = 1;
-	wait_time = brain->philos[i].time_to_eat/2;
+	odd = (brain->total_philo % 2);
+	wait_time = brain->philos[i].time_to_eat;
 	while (i < brain->total_philo)
 	{
+		while (brain->philos[i].myfork == 0)
+			;
 		pthread_create(&brain->thread_id[i], NULL, 
 			(void *_Nullable)philo_exec, &brain->philos[i]);
-		if (i == brain->total_philo - 2)
+		if (i == brain->total_philo - 1 - odd)
 		{
 			i = 0;
 			wait_time = wait_time + get_time();

@@ -20,7 +20,7 @@ void	philo_start(t_brain *brain)
 
 	i = 1;
 	odd = (brain->total_philo % 2);
-	wait_time = brain->philos[i].time_to_eat;
+	wait_time = brain->philos[i].time_to_eat/2;
 	while (i < brain->total_philo)
 	{
 		while (brain->philos[i].myfork == 0)
@@ -63,6 +63,7 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 			brain->philos[i].next_philo = &brain->philos[0];
 		else
 			brain->philos[i].next_philo = &brain->philos[i + 1];
+		brain->philos[i].brain = &*brain;
 		pthread_mutex_init(&brain->philos[i].fork, NULL);
 		i++;
 	}
@@ -85,6 +86,7 @@ int	main(int argc, char *argv[])
 	brain.philos = malloc(sizeof(t_philo) * brain.total_philo);
 	brain.alive = 1;
 	brain.begin_time = get_time();
+	brain.queue = 1;
 	philo_setup(&brain, argc, argv);
 	return (0);
 }

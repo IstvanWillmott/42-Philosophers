@@ -33,15 +33,15 @@ void	philo_sleep(t_philo *philos)
 void	eat(t_philo *philos)
 {
 	long	eat_time;
-	int		odd;
 
-	odd = (philos->brain->total_philo % 2);
+	printf("queue: %i(%i)\n", philos->brain->queue, philos->num + 1);
 	while (philos->brain->queue != philos->num)
 		;
 	philos->myfork = 0;
 	philos->next_philo->myfork = 0;
 	pthread_mutex_lock(&philos->fork);
 	pthread_mutex_lock(&philos->next_philo->fork);
+	printf("i am %i, i am taking %is fork\n", philos->num + 1, philos->next_philo->num + 1);
 	printf("%lims	%i has taken a fork\n", get_time() - philos->begin_time, philos->num + 1);
 	printf("%lims	%i has taken a fork\n", get_time() - philos->begin_time, philos->num + 1);
 	printf("%lims	%i is eating\n", get_time() - philos->begin_time, philos->num + 1);
@@ -53,13 +53,13 @@ void	eat(t_philo *philos)
 	pthread_mutex_unlock(&philos->next_philo->fork);
 	philos->myfork = 1;
 	philos->next_philo->myfork = 1;
-	if (philos->brain->queue == philos->brain->total_philo - 1 - odd)
-		philos->brain->queue = 0;
-	else if (philos->brain->queue > philos->brain->total_philo - 1)
-		philos->brain->queue = 1;
-	else
-		philos->brain->queue += 2;
-	philo_sleep(&*philos);
+	//if (philos->brain->queue == philos->brain->total_philo - 1)
+	//	philos->brain->queue = 1;
+	//else if (philos->brain->queue == philos->brain->total_philo - 2)
+		//philos->brain->queue = 0;
+	//else
+		//philos->brain->queue = philos->num + 2;
+	philo_sleep(philos);
 }
 
 void	philo_exec(t_philo *philos)
@@ -75,7 +75,7 @@ void	philo_exec(t_philo *philos)
 		eat(&*philos);
 	}*/
 	while (1)
-		eat(&*philos);
+		eat(philos);
 	//philos->alive = 0;
 	printf("%i ded\n", philos->num + 1);
 }

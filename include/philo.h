@@ -45,7 +45,7 @@ typedef struct s_brain
 	t_philo		*philos;
 	int			alive;
 	int			current;
-	int			queue;
+	//int			queue;
 }	t_brain;
 
 int		ft_atoi(const char *str);

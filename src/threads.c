@@ -34,9 +34,7 @@ void	eat(t_philo *philos)
 {
 	long	eat_time;
 
-	printf("queue: %i(%i)\n", philos->brain->queue, philos->num + 1);
-	while (philos->brain->queue != philos->num)
-		;
+	//printf("queue: %i(%i)\n", philos->brain->queue, philos->num + 1);
 	philos->myfork = 0;
 	philos->next_philo->myfork = 0;
 	pthread_mutex_lock(&philos->fork);
@@ -56,17 +54,21 @@ void	eat(t_philo *philos)
 	//if (philos->brain->queue == philos->brain->total_philo - 1)
 	//	philos->brain->queue = 1;
 	//else if (philos->brain->queue == philos->brain->total_philo - 2)
-		//philos->brain->queue = 0;
+	//	philos->brain->queue = 0;
 	//else
-		//philos->brain->queue = philos->num + 2;
+	//	philos->brain->queue = philos->num + 2;
 	philo_sleep(philos);
 }
 
 void	philo_exec(t_philo *philos)
 {
 	long	death_timer;
+	int		odd;
+	long	wait_time;
 
 	death_timer = philos->time_to_die + get_time();
+	odd = philos->brain->total_philo % 2;
+	wait_time = philos->time_to_eat/2;
 	/*while (philos->alive == 1)
 	{
 		if (death_timer < get_time())
@@ -74,6 +76,14 @@ void	philo_exec(t_philo *philos)
 		death_timer = philos->time_to_die + get_time();
 		eat(&*philos);
 	}*/
+
+	if ((philos->num) % 2 == 1)
+	{	
+		wait_time = get_time() + wait_time;
+		while (wait_time > get_time())
+			;
+	}
+	printf("i am %i\n", philos->num + 1);
 	while (1)
 		eat(philos);
 	//philos->alive = 0;

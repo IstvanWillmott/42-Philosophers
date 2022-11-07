@@ -12,30 +12,20 @@
 
 #include "philo.h"
 
-/*void	philo_start(t_brain *brain)
+void	simple_setup(t_brain *brain, int argc, char **argv, int i)
 {
-	int		i;
-	int		odd;
-	long	wait_time;
-
-	i = 1;
-	odd = (brain->total_philo % 2);
-	wait_time = brain->philos[i].time_to_eat/2;
-	while (i < brain->total_philo)
-	{
-		pthread_create(&brain->thread_id[i], NULL, 
-			(void *_Nullable)philo_exec, &brain->philos[i]);
-		if (i == brain->total_philo - 1 - odd)
-		{
-			i = 0;
-			wait_time = wait_time + get_time();
-			while (wait_time > get_time())
-				;
-		}
-		else
-			i += 2;
-	}
-}*/
+	brain->philos[i].begin_time = brain->begin_time;
+	brain->philos[i].alive = 1;
+	brain->philos[i].num = i;
+	brain->philos[i].time_to_die = ft_atoi(argv[2]);
+	brain->philos[i].time_to_eat = ft_atoi(argv[3]);
+	brain->philos[i].time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		brain->philos[i].times_eaten = ft_atoi(argv[5]);
+	else
+		brain->philos[i].times_eaten = -1;
+	brain->philos[i].myfork = 1;
+}
 
 void	philo_setup(t_brain *brain, int argc, char **argv)
 {
@@ -46,24 +36,18 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 	brain->current = 0;
 	while (i < brain->total_philo)
 	{
-		brain->philos[i].begin_time = brain->begin_time;
-		brain->philos[i].alive = 1;
-		brain->philos[i].num = i;
-		brain->philos[i].time_to_die = ft_atoi(argv[2]);
-		brain->philos[i].time_to_eat = ft_atoi(argv[3]);
-		brain->philos[i].time_to_sleep = ft_atoi(argv[4]);
-		if (argc == 6)
-			brain->philos[i].times_eaten = ft_atoi(argv[5]);
-		else
-			brain->philos[i].times_eaten = -1;
+		simple_setup(brain, argc, argv, i);
 		brain->philos[i].myfork = 1;
-		if (i == brain->total_philo - 1)
-			brain->philos[i].next_philo = &brain->philos[0];
-		else
-			brain->philos[i].next_philo = &brain->philos[i + 1];
+		if (brain->total_philo >= 2)
+		{
+			if (i == brain->total_philo - 1)
+				brain->philos[i].next_philo = &brain->philos[0];
+			else
+				brain->philos[i].next_philo = &brain->philos[i + 1];
+		}
 		brain->philos[i].brain = brain;
 		pthread_mutex_init(&brain->philos[i].fork, NULL);
-		pthread_create(&brain->thread_id[i], NULL, 
+		pthread_create(&brain->thread_id[i], NULL,
 			(void *_Nullable)philo_exec, &brain->philos[i]);
 		i++;
 	}
@@ -71,7 +55,7 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 
 int	main(int argc, char *argv[])
 {
-	t_brain brain;
+	t_brain	brain;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -85,9 +69,9 @@ int	main(int argc, char *argv[])
 	brain.philos = malloc(sizeof(t_philo) * brain.total_philo);
 	brain.alive = 1;
 	brain.begin_time = get_time();
-	//brain.queue = 1;
 	philo_setup(&brain, argc, argv);
 	while (brain.alive)
 		;
+	usleep(10000);
 	return (0);
 }

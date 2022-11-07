@@ -20,21 +20,21 @@
 # include <sys/time.h>
 # include <string.h>
 
-typedef struct s_brain t_brain;
+typedef struct s_brain	t_brain;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	long			begin_time;
-	int 			alive;
+	int				alive;
 	int				num;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			times_eaten;
 	int				myfork;
-	pthread_mutex_t fork;
+	pthread_mutex_t	fork;
 	struct s_philo	*next_philo;
-	t_brain 		*brain;
+	t_brain			*brain;
 }	t_philo;
 
 typedef struct s_brain
@@ -45,7 +45,6 @@ typedef struct s_brain
 	t_philo		*philos;
 	int			alive;
 	int			current;
-	//int			queue;
 }	t_brain;
 
 int		ft_atoi(const char *str);

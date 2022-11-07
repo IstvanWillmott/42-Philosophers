@@ -23,8 +23,6 @@ void	philo_sleep(t_philo *philos)
 		- philos->begin_time, philos->num + 1);
 	while (sleep_time > get_time())
 		;
-	if (philos->brain->alive == 0)
-		return ;
 	printf("%lims	%i is thinking\n", get_time()
 		- philos->begin_time, philos->num + 1);
 }
@@ -33,8 +31,6 @@ void	eat(t_philo *philos)
 {
 	long	eat_time;
 
-	if (philos->brain->alive == 0)
-		return ;
 	pthread_mutex_lock(&philos->fork);
 	pthread_mutex_lock(&philos->next_philo->fork);
 	philos->myfork = 0;
@@ -46,6 +42,8 @@ void	eat(t_philo *philos)
 	printf("%lims	%i is eating\n", get_time()
 		- philos->begin_time, philos->num + 1);
 	eat_time = philos->time_to_eat + get_time();
+	if (philos->brain->alive == 0)
+		return ;
 	while (eat_time > get_time())
 		;
 	philos->times_eaten--;
@@ -75,9 +73,9 @@ void	philo_exec(t_philo *philos)
 		eat(philos);
 	}
 	philos->alive = 0;
-	if (philos->brain->alive == 0)
+	if (philos->brain->alive == 1)
 		printf("%lims	%i died\n", get_time()
 			- philos->begin_time, philos->num + 1);
 	philos->brain->alive = 0;
-	pthread_cancel(philos->brain->thread_id[philos->num]);
+	//pthread_cancel(philos->brain->thread_id[philos->num]);
 }

@@ -48,9 +48,9 @@ typedef struct s_brain
 }	t_brain;
 
 int		ft_atoi(const char *str);
+long	get_time(void);
 
 void	philo_exec(t_philo *philos);
 
-long	get_time(void);
 
 #endif

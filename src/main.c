@@ -72,6 +72,12 @@ int	main(int argc, char *argv[])
 	philo_setup(&brain, argc, argv);
 	while (brain.alive)
 		;
-	usleep(10000);
+	int	i = 0;
+	while (i < brain.total_philo)
+	{
+		pthread_cancel(brain.thread_id[i]);
+		i++;
+	}
+	//usleep(10000);
 	return (0);
 }

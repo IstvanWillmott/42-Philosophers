@@ -8,7 +8,7 @@ While they are eating, they are not thinking nor sleeping; <br>
 while thinking, they are not eating nor sleeping; <br>
 and, of course, while sleeping, they are not eating nor thinking. <br>
 <br>
-To eat, each philosopher takes their own fork and their neighbours fork. <br>
+To eat, each philosopher takes their own fork and their neighbour's fork. <br>
 When they are finished eating, they put their forks back on the table. <br>
 <br>
 Every philosopher needs to eat and should never starve. <br>

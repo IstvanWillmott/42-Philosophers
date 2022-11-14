@@ -27,6 +27,7 @@ typedef struct s_philo
 	long			begin_time;
 	int				alive;
 	int				num;
+	int				ready;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
@@ -45,6 +46,7 @@ typedef struct s_brain
 	t_philo		*philos;
 	int			alive;
 	int			current;
+	int			ready;
 }	t_brain;
 
 int		ft_atoi(const char *str);

@@ -14,12 +14,12 @@
 
 void	simple_setup(t_brain *brain, int argc, char **argv, int i)
 {
-	brain->philos[i].begin_time = brain->begin_time;
 	brain->philos[i].alive = 1;
 	brain->philos[i].num = i;
 	brain->philos[i].time_to_die = ft_atoi(argv[2]);
 	brain->philos[i].time_to_eat = ft_atoi(argv[3]);
 	brain->philos[i].time_to_sleep = ft_atoi(argv[4]);
+	brain->philos[i].ready = 0;
 	if (argc == 6)
 		brain->philos[i].times_eaten = ft_atoi(argv[5]);
 	else
@@ -51,6 +51,17 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 			(void *_Nullable)philo_exec, &brain->philos[i]);
 		i++;
 	}
+	i = 0;
+	while (brain->ready == 0)
+	{
+		if (brain->philos[i].ready == 1)
+			i++;
+		if (i == brain->total_philo)
+		{
+			brain->begin_time = get_time();
+			brain->ready = 1;
+		}
+	}
 }
 
 int	main(int argc, char *argv[])
@@ -68,7 +79,8 @@ int	main(int argc, char *argv[])
 	brain.total_philo = ft_atoi(argv[1]);
 	brain.philos = malloc(sizeof(t_philo) * brain.total_philo);
 	brain.alive = 1;
-	brain.begin_time = get_time();
+	//brain.begin_time = get_time();
+	brain.ready = 0;
 	philo_setup(&brain, argc, argv);
 	while (brain.alive)
 		;

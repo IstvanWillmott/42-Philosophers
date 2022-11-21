@@ -33,6 +33,7 @@ typedef struct s_philo
 	long			time_to_sleep;
 	long			times_eaten;
 	int				myfork;
+	long			death_timer;
 	pthread_mutex_t	fork;
 	struct s_philo	*next_philo;
 	t_brain			*brain;

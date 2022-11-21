@@ -20,6 +20,7 @@ void	simple_setup(t_brain *brain, int argc, char **argv, int i)
 	brain->philos[i].time_to_eat = ft_atoi(argv[3]);
 	brain->philos[i].time_to_sleep = ft_atoi(argv[4]);
 	brain->philos[i].ready = 0;
+	brain->philos[i].death_timer = 0;
 	if (argc == 6)
 		brain->philos[i].times_eaten = ft_atoi(argv[5]);
 	else

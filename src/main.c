@@ -6,11 +6,19 @@
 /*   By: iwillmot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:41:40 by iwillmot          #+#    #+#             */
-/*   Updated: 2022/08/15 14:41:41 by iwillmot         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:48:24 by iwillmot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void 	one_philo(t_brain *brain, char **argv)
+{
+	printf("%ims	%i has taken a fork\n", 0, 1);
+	usleep(ft_atoi(argv[2]));
+	printf("%ims	%i has died\n", ft_atoi(argv[2]), 1);
+	brain->alive = 0;
+}
 
 void	simple_setup(t_brain *brain, int argc, char **argv, int i)
 {
@@ -38,7 +46,6 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 	while (i < brain->total_philo)
 	{
 		simple_setup(brain, argc, argv, i);
-		brain->philos[i].myfork = 1;
 		if (brain->total_philo >= 2)
 		{
 			if (i == brain->total_philo - 1)
@@ -52,6 +59,8 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 			(void *_Nullable)philo_exec, &brain->philos[i]);
 		i++;
 	}
+	if (brain->total_philo == 1)
+		one_philo(brain, argv);
 	i = 0;
 	while (brain->ready == 0)
 	{

@@ -48,14 +48,16 @@ void	eat(t_philo *philos)
 	eat_time = philos->time_to_eat + get_time();
 	if (philos->death_timer < get_time() || philos->brain->alive == 0)
 		return ;
-	philos->death_timer = philos->time_to_die + get_time();
 	while (eat_time > get_time())
 		{usleep(1);};
+	philos->death_timer = philos->time_to_die + get_time();
 	philos->times_eaten--;
 	pthread_mutex_unlock(&philos->fork);
 	pthread_mutex_unlock(&philos->next_philo->fork);
 	philos->myfork = 1;
 	philos->next_philo->myfork = 1;
+	if (philos->death_timer < get_time() || philos->brain->alive == 0)
+		return ;
 	philo_sleep(philos);
 }
 

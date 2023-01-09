@@ -77,7 +77,11 @@ void	philo_setup(t_brain *brain, int argc, char **argv)
 int	main(int argc, char *argv[])
 {
 	t_brain	brain;
+	int		done_eating;
+	int		l;
 
+	done_eating = 0;
+	l = 0;
 	if (argc != 5 && argc != 6)
 	{
 		printf("Expected:\n./philo <number_of_philosophers"
@@ -89,17 +93,32 @@ int	main(int argc, char *argv[])
 	brain.total_philo = ft_atoi(argv[1]);
 	brain.philos = malloc(sizeof(t_philo) * brain.total_philo);
 	brain.alive = 1;
-	//brain.begin_time = get_time();
 	brain.ready = 0;
 	philo_setup(&brain, argc, argv);
 	while (brain.alive)
-		;
+	{
+		if (argc == 6)
+		{
+			while (done_eating != brain.total_philo)
+			{
+				done_eating = 0;
+				while (l < brain.total_philo)
+				{
+					if (brain.philos[l].times_eaten == 0)
+						done_eating++;
+					l++;
+				}
+				l = 0;
+			}
+			brain.alive = 0;
+		}
+	}
 	int	i = 0;
 	while (i < brain.total_philo)
 	{
 		pthread_cancel(brain.thread_id[i]);
 		i++;
 	}
-	//usleep(10000);
+	usleep(10000);
 	return (0);
 }

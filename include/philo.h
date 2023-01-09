@@ -55,5 +55,4 @@ long	get_time(void);
 
 void	philo_exec(t_philo *philos);
 
-
 #endif

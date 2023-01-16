@@ -47,6 +47,8 @@ void	eating(t_philo *philos)
 	while (eat_time > get_time())
 	{
 		usleep(1);
+		if (philos->death_timer < get_time() || philos->alive == 0)
+			return ;
 	}
 }
 
@@ -90,8 +92,7 @@ void	death(t_philo *philos)
 			i++;
 		}
 		if (philos->brain->alive == 1)
-			printf("%lims	%i died\n", get_time() - philos->brain->begin_time
-				- (get_time() - philos->death_timer), philos->num + 1);
+			printf("%lims	%i died\n", get_time() - philos->brain->begin_time, philos->num + 1);
 		philos->brain->alive = 0;
 	}
 }

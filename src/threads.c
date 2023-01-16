@@ -92,7 +92,8 @@ void	death(t_philo *philos)
 			i++;
 		}
 		if (philos->brain->alive == 1)
-			printf("%lims	%i died\n", get_time() - philos->brain->begin_time, philos->num + 1);
+			printf("%lims	%i died\n", get_time()
+				- philos->brain->begin_time, philos->num + 1);
 		philos->brain->alive = 0;
 	}
 }
